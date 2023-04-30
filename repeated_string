@@ -70,45 +70,71 @@ import sys
 #  2. LONG_INTEGER n
 #
 
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'repeatedString' function below.
+#
+# The function is expected to return a LONG_INTEGER.
+# The function accepts following parameters:
+#  1. STRING s
+#  2. LONG_INTEGER n
+#
+
 def repeatedString(s, n):
     # Write your code here
+    def calc(s, match, total):
+        for i in s:
+            if total == 0:
+                break
+            elif i == 'a':
+                match += 1
+                total -= 1
+                print("match found")
+                print(match)
+                print(total)
+            elif i != 'a':
+                total -= 1
+                print("match not found")
+                print(match)
+                print(total)
+        return match
     match = 0
     total = n
-    while (total > 0):
-        print("starting while loop")
-        print(n)
+    if len(s) == 1:
         if s == 'a':
+            print("string is a so match is same as input")
             return n
+        elif s != 'a':
+            print("no match found in whole string so match is 0")
+            return 0
+    elif len(s) > n :
+        #print ("inside elif")
+        match = calc(s, match, total)
+        print("string is greater than number")
+    elif len(s) < n:
+        match = calc(s, match, total)
+        print("matches in single iteration is" + str(match))
+        divide = int(n/len(s))
+        print("division is "+ str(divide))
+        remain = n%len(s)
+        print("remainder is "+ str(remain))
+        match *= divide
+        print ("total match before remain is "+ str(match))
+        if remain == 0:
+            return match
+            print("total match is "+ str(match) + "as remainder is 0")
         else:
-            for i in s:
-                if total == 0:
-                    break
-                elif  i == 'a':
-                    print("match found")
-                    match += 1
-                    total -= 1
-                    print(match)
-                    print(total)
-                elif i != 'a':
-                    print("match not found")
-                    total -= 1
-                    print(match)
-                    print(total)
+            match = calc(s, match, remain)
+            print("total match i.e match + remainder match is"+ str(match))
     return match
-            
-            
-        
-
-if __name__ == '__main__':
-    fptr = open(os.environ['OUTPUT_PATH'], 'w')
-
-    s = input()
-
-    n = int(input().strip())
-
-    result = repeatedString(s, n)
-
-    fptr.write(str(result) + '\n')
-
-    fptr.close()
+                
+                
+                       
 
